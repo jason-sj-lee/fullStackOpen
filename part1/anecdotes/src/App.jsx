@@ -4,7 +4,7 @@ const App = () => {
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
-  
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -17,11 +17,23 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState([0,0,0,0,0,0,0])
+ 
+  const handleSetPoints = (index) => {
+    const copy = [...points]
+    copy[index] += 1
+    setPoints(copy)
+
+  }
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <button onClick={() => setSelected(getRandomInt(7))}>next anecdote</button>
+      <h2>Anecdotes of the day</h2>
+        <p>{anecdotes[selected]} has {points[selected]}</p>
+        <button onClick={() => handleSetPoints(selected)}>vote</button>
+        <button onClick={() => setSelected(getRandomInt(7))}>next anecdote</button>
+      
+      <h2>Anecdotes with most votes</h2>  
     </div>
   )
 }
