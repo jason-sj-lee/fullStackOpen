@@ -5,6 +5,24 @@ const App = () => {
     return Math.floor(Math.random() * max);
   }
 
+  function getIndexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -18,12 +36,13 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState([0,0,0,0,0,0,0])
+  const [indexOfMax, setIndexOfMax] = useState(0)
  
   const handleSetPoints = (index) => {
     const copy = [...points]
     copy[index] += 1
     setPoints(copy)
-
+    setIndexOfMax(getIndexOfMax(points))
   }
 
   return (
@@ -34,6 +53,7 @@ const App = () => {
         <button onClick={() => setSelected(getRandomInt(7))}>next anecdote</button>
       
       <h2>Anecdotes with most votes</h2>  
+        <p>{anecdotes[indexOfMax]} has {points[indexOfMax]} votes</p>
     </div>
   )
 }
