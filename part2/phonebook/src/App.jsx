@@ -5,9 +5,14 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   
   const handleNameChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const handleNumChange = (event) => {
+    setNewNumber(event.target.value)
   }
 
   const hasSameName = (personObj) => {
@@ -22,7 +27,8 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     const personObj = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
     
     if (hasSameName(personObj)) {
@@ -32,6 +38,7 @@ const App = () => {
 
     setPersons(persons.concat(personObj))
     setNewName('')
+    setNewNumber('')
   }
 
   return (
@@ -42,15 +49,12 @@ const App = () => {
           name: <input value={newName} onChange={handleNameChange}/>
         </div>
         <div>
-          <button 
-            type="submit"
-          >
-            add
-          </button>
+          number: <input value={newNumber} onChange={handleNumChange}/>
         </div>
+        <div><button type="submit">add</button></div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p>{person.name}</p>)}
+      {persons.map(person => <p>{person.name} {person.number}</p>)}
     </div>
   )
 }
