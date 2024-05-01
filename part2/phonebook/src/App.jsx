@@ -53,14 +53,19 @@ const App = () => {
       return
     }
 
-    axios
-    .post('http://localhost:3001/persons', personObj)
-    .then(response => {
-      console.log(response)
-      setPersons(persons.concat(response.data))
-      setNewName('')
-      setNewNumber('')
-    })
+    personServices.create(personObj)
+      .then(data => {
+        setPersons(persons.concat(data))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      personServices.remove(id)
+      setPersons(persons.filter(person => person.id !== id))
+    }
   }
 
   return (
@@ -81,7 +86,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons peopleToShow={peopleToShow} />
+      <Persons peopleToShow={peopleToShow} delete={deletePerson} />
 
     </div>
   )
