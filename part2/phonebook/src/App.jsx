@@ -84,7 +84,18 @@ const App = () => {
   const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
       personServices.remove(id)
-      setPersons(persons.filter(person => person.id !== id))
+        .then(data => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+        .catch(error => {
+          setErrorMessage(
+            `${name} has already been deleted!`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 3000) 
+        })
+      
     }
   }
 
