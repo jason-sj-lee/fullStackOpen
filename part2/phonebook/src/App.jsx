@@ -34,7 +34,7 @@ const App = () => {
 
   const hasSameName = (personObj) => {
     for (let i = 0; i < persons.length; i++) {
-      if (persons[i].name === personObj.name) {
+      if (persons[i].name.toLowerCase() === personObj.name.toLowerCase()) {
         return true
       }
     }
@@ -49,7 +49,19 @@ const App = () => {
     }
     
     if (hasSameName(personObj)) {
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)) {
+        for (const person of persons) {
+          if (person.name.toLowerCase() === newName) {
+            personServices.update(person.id, personObj)
+              .then(data => {
+                const index = persons.findIndex(el => el.id === data.id)
+                const personsCopy = [...persons]
+                personsCopy[index] = data
+                setPersons(personsCopy)
+              })
+          }
+        }
+      }
       return
     }
 
