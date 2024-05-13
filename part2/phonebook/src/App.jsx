@@ -60,6 +60,8 @@ const App = () => {
                 const personsCopy = [...persons]
                 personsCopy[index] = data
                 setPersons(personsCopy)
+                setNewName('')
+                setNewNumber('')
               })
           }
         }
